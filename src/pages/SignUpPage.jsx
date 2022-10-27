@@ -6,7 +6,7 @@ import { AuthContext } from "../contexts/ProviderContext";
 
 const SignUpPage = () => {
   const [error, setError] = useState("");
-  const { user, createUser, googleLogIn } = useContext(AuthContext);
+  const { createUser, googleLogIn } = useContext(AuthContext);
   const googleProvider = new GoogleAuthProvider();
   const handleSubmit = (e) => {
     e.preventDefault();
