@@ -1,12 +1,4 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`# Batter Explanation
+# Batter Explanation
 
 Batter Explanation is online education platform you can buy online course form here
 
