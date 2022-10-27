@@ -1,12 +1,32 @@
 import React from "react";
+import { useContext } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/ProviderContext";
 
 const Login = () => {
+  const { user, logInUser } = useContext(AuthContext);
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const navigateToCurrentPage = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+
+    logInUser(email, password)
+      .then((result) => {
+        console.log(result.user, "from log in");
+
+        navigateToCurrentPage(from, { replace: true });
+        form.reset();
+        alert("seccess");
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err.message);
+      });
   };
 
   return (
@@ -99,9 +119,9 @@ const Login = () => {
       </div>
       <p className="text-xs text-center sm:px-6 dark:text-gray-400">
         Don't have an account?
-        <a href="#" className="underline dark:text-[#aa076b]">
+        <Link to="/signUp" className="underline dark:text-[#aa076b]">
           Sign up
-        </a>
+        </Link>
       </p>
     </div>
   );

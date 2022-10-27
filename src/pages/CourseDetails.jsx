@@ -1,12 +1,16 @@
 import React from "react";
 import { Link, useLoaderData } from "react-router-dom";
-import { FaClock, FaLeanpub, FaInstalod } from "react-icons/fa";
+import { FaClock, FaLeanpub, FaInstalod, FaFilePdf } from "react-icons/fa";
+import Pdf from "react-to-pdf";
+const ref = React.createRef();
 
 const CourseDetails = () => {
   const { thum, cat_name, dec } = useLoaderData();
-
   return (
-    <div className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20">
+    <div
+      ref={ref}
+      className="px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20"
+    >
       <div className="grid gap-5 row-gap-10 lg:grid-cols-2 mb-5">
         <div className="flex flex-col justify-center">
           <div className="max-w-xl mb-6">
@@ -81,6 +85,19 @@ const CourseDetails = () => {
       >
         Enroll Now
       </Link>
+      <Pdf targetRef={ref} filename="code-example.pdf">
+        {({ toPdf }) => (
+          <button
+            onClick={toPdf}
+            className="ml-4 px-8 py-3 font-semibold rounded bg-[#aa076b] text-white "
+          >
+            Download Info
+            <span>
+              <FaFilePdf className=" ml-1 inline" />
+            </span>
+          </button>
+        )}
+      </Pdf>
     </div>
 
     // <div className="p-5 mx-auto sm:p-10 md:p-5   text-gray-100">

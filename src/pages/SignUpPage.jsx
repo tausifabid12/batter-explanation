@@ -1,12 +1,21 @@
 import React from "react";
+import { useContext } from "react";
+import { Link } from "react-router-dom";
+import { AuthContext } from "../contexts/ProviderContext";
 
 const SignUpPage = () => {
+  const { user, createUser } = useContext(AuthContext);
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    console.log(email, password);
+    createUser(email, password)
+      .then(() => {
+        alert("successfull");
+        form.reset();
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -137,10 +146,10 @@ const SignUpPage = () => {
               </button>
             </div>
             <p className="text-xs text-center sm:px-6 dark:text-gray-400">
-              Don't have an account?
-              <a href="#" className="underline dark:text-[#aa076b]">
-                Sign up
-              </a>
+              Already have an account?
+              <Link to="/logIn" className="underline dark:text-[#aa076b]">
+                Log in
+              </Link>
             </p>
           </div>
         </div>

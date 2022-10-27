@@ -1,9 +1,13 @@
 import React from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
-
+import { AuthContext } from "../contexts/ProviderContext";
+import userImg from "../assets/user.png";
 const Header = () => {
+  const { logOut, user } = useContext(AuthContext);
+
   return (
-    <header className="w-full p-4 bg-white text-gray-900 font-semibold shadow-md">
+    <header className="w-full p-4 bg-white text-gray-900 font-semibold shadow-md z-50">
       <div className="container flex justify-between h-16 mx-auto">
         <Link
           rel="noopener noreferrer"
@@ -44,32 +48,48 @@ const Header = () => {
           <li className="flex">
             <Link
               rel="noopener noreferrer"
-              to="#"
+              to="/blog"
               className="flex items-center px-4 -mb-1 border-b-2 border-transparent"
             >
-              Link
+              Blog
             </Link>
           </li>
           <li className="flex">
             <Link
               rel="noopener noreferrer"
-              to="#"
+              to="/faq"
               className="flex items-center px-4 -mb-1 border-b-2 border-transparent"
             >
-              Link
+              FAQ
             </Link>
           </li>
         </ul>
         <div className="items-center flex-shrink-0 hidden lg:flex">
-          <Link to="/logIn" className="self-center px-8 py-3 rounded">
-            Sign in
-          </Link>
-          <Link
-            to="signUp"
-            className="self-center px-8 py-3 font-semibold rounded bg-[#aa076b] text-white"
-          >
-            Sign up
-          </Link>
+          {user?.uid ? (
+            <>
+              <Link onClick={logOut} className="self-center px-8 py-3 rounded">
+                Log Out
+              </Link>
+              <img
+                className="h-9 w-9"
+                src={user?.photoURL || userImg}
+                alt=""
+                title={user?.displayName || "Unknown"}
+              />
+            </>
+          ) : (
+            <>
+              <Link to="/logIn" className="self-center px-8 py-3 rounded">
+                Sign in
+              </Link>
+              <Link
+                to="signUp"
+                className="self-center px-8 py-3 font-semibold rounded bg-[#aa076b] text-white"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
         </div>
         <button className="p-4 lg:hidden">
           <svg
