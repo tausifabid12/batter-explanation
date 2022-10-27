@@ -71,7 +71,7 @@ const Header = () => {
                 Log Out
               </Link>
               <img
-                className="h-9 w-9"
+                className="h-9 w-9 rounded-full"
                 src={user?.photoURL || userImg}
                 alt=""
                 title={user?.displayName || "Unknown"}

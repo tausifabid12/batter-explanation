@@ -1,10 +1,13 @@
-import React from "react";
+import { GoogleAuthProvider } from "firebase/auth";
+import React, { useState } from "react";
 import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../contexts/ProviderContext";
 
 const SignUpPage = () => {
-  const { user, createUser } = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const { user, createUser, googleLogIn } = useContext(AuthContext);
+  const googleProvider = new GoogleAuthProvider();
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
@@ -13,9 +16,22 @@ const SignUpPage = () => {
     createUser(email, password)
       .then(() => {
         alert("successfull");
+        setError("");
         form.reset();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setError(err.message);
+        form.reset();
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    googleLogIn(googleProvider)
+      .then((result) => {
+        setError("");
+        console.log("log in success");
+      })
+      .catch((error) => setError(error.message));
   };
 
   return (
@@ -73,7 +89,7 @@ const SignUpPage = () => {
                       Password
                     </label>
                     <a
-                      href="#"
+                      href="/"
                       className="text-xs hover:underline dark:text-gray-400"
                     >
                       Forgot password?
@@ -90,11 +106,12 @@ const SignUpPage = () => {
               </div>
               <div className="space-y-2">
                 <div>
+                  <p className="text-sm text-red-600 font-bold">{error}</p>
                   <button
                     type="Submit"
                     className="w-full px-8 py-3 mt-6 font-semibold rounded-md bg-[#aa076b] text-white"
                   >
-                    Sign in
+                    Sign uo
                   </button>
                 </div>
               </div>
@@ -109,6 +126,7 @@ const SignUpPage = () => {
             </div>
             <div className="flex justify-center space-x-4">
               <button
+                onClick={handleGoogleLogin}
                 aria-label="Log in with Google"
                 className="p-3 rounded-sm"
               >
