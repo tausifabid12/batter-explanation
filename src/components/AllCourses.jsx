@@ -9,7 +9,7 @@ const AllCourses = () => {
 
   const [courseData, setCourseData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:5000/categories")
+    fetch("https://batter-explanation-server.vercel.app/categories")
       .then((res) => res.json())
       .then((data) => setCourseData(data));
   }, []);

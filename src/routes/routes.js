@@ -23,13 +23,16 @@ export const router = createBrowserRouter([
       },
       {
         path: "/courses",
-        loader: () => fetch("http://localhost:5000/categories"),
+        loader: () =>
+          fetch("https://batter-explanation-server.vercel.app/categories"),
         element: <Courses />,
       },
       {
         path: "/courses/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/categories/${params.id}`),
+          fetch(
+            `https://batter-explanation-server.vercel.app/categories/${params.id}`
+          ),
         element: <CourseDetails />,
       },
       {
